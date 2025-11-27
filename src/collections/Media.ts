@@ -30,5 +30,14 @@ export const Media: CollectionConfig = {
         return data
       },
     ],
+    // ✅ ADD THIS: Generate S3 URL when reading (for old images)
+    afterRead: [
+      async ({ doc }) => {
+        if (doc.filename) {
+          doc.url = getS3Url(doc.filename) // generate S3 URL on-the-fly
+        }
+        return doc
+      },
+    ],
   },
 }
